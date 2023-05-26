@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 interface IShape {
-  shape: 'X' | 'O';
+  shape: 'X' | 'O' | '';
   index: number;
 }
 
