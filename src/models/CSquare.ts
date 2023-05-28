@@ -1,3 +1,5 @@
+import { Shape } from './Shape';
+
 export class CSquare {
-  shape: 'X' | 'O' | '' = '';
+  shape: Shape = Shape.empty;
 }

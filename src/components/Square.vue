@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Shape } from '../models/Shape';
 
 interface IShape {
-  shape: 'X' | 'O' | '';
+  shape: Shape;
   index: number;
 }
 
