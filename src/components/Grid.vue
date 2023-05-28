@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import Square from './Square.vue';
-import { ref } from 'vue';
-import { CSquare } from '../models/CSquare';
+import { Game } from '../models/CGame';
 
-const startingGrid: CSquare[] = Array.from({ length: 9 }, () => new CSquare());
+interface IProps {
+  game: Game;
+}
 
-const grid = ref<CSquare[]>(startingGrid);
-
-const handlePlaceShape = (index: number) => {
-  grid.value[index].shape = grid.value[index].shape === 'X' ? '' : 'X';
-};
+const props = defineProps<IProps>();
+const emit = defineEmits(['placeShape']);
 </script>
 
 <template>
   <div class="w-60 h-60 flex flex-wrap">
     <Square
-      v-for="(square, index) in grid"
+      v-for="(square, index) in game.grid"
       :shape="square.shape"
       :index="index"
-      @placeShape="(index: number) => handlePlaceShape(index)"
+      @placeShape="(index: number) => emit('placeShape', index)"
     />
   </div>
 </template>

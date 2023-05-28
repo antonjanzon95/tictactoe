@@ -2,10 +2,13 @@
 import { ref } from 'vue';
 import { Player } from '../models/CPlayer';
 import { Shape } from '../models/Shape';
+import { Game } from '../models/CGame';
 
 const name = ref<string>('');
 const pickedShape = ref<Shape>(Shape.X);
 const players = ref<Player[]>([]);
+
+const emit = defineEmits(['startGame']);
 
 const handleSubmit = () => {
   const newPlayer = new Player(name.value, pickedShape.value);
@@ -14,7 +17,8 @@ const handleSubmit = () => {
   players.value.push(newPlayer);
 
   if (players.value.length === 2) {
-    // start game
+    const newGame = new Game(players.value);
+    emit('startGame', newGame);
   }
 };
 
