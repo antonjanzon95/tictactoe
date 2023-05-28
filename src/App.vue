@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import Grid from './components/Grid.vue';
+import Layout from './components/Layout.vue';
 </script>
 
 <template>
-  <Grid />
+  <Layout>
+    <router-view />
+  </Layout>
 </template>
