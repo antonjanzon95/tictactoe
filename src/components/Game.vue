@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { Game } from '../models/CGame';
 import Grid from './Grid.vue';
 import PlayerForm from './PlayerForm.vue';
+import GameInfo from './GameInfo.vue';
 
 const game = ref<Game | null>(null);
 
@@ -60,6 +61,7 @@ onMounted(() => {
 
 <template>
   <div v-if="game">
+    <GameInfo :game="game" @resetGame="() => resetGame()" />
     <Grid
       :game="game"
       @placeShape="(index:number) => handlePlaceShape(index)"
