@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Game } from '../models/CGame';
 import Grid from './Grid.vue';
 import PlayerForm from './PlayerForm.vue';
@@ -8,6 +8,21 @@ const game = ref<Game | null>(null);
 
 const startGame = (newGame: Game) => {
   game.value = newGame;
+  localStorage.setItem('game', JSON.stringify(newGame));
+};
+
+const saveGameToStorage = () => {
+  localStorage.setItem('game', JSON.stringify(game.value));
+};
+
+const fetchGame = () => {
+  const storedGame = localStorage.getItem('game');
+  if (typeof storedGame !== 'string') {
+    return;
+  }
+  const parsedGame: Game = JSON.parse(storedGame);
+
+  game.value = parsedGame;
 };
 
 const handlePlaceShape = (index: number) => {
@@ -26,7 +41,13 @@ const handlePlaceShape = (index: number) => {
   if (otherPlayer) {
     game.value.isPlaying = otherPlayer;
   }
+
+  saveGameToStorage();
 };
+
+onMounted(() => {
+  fetchGame();
+});
 </script>
 
 <template>
