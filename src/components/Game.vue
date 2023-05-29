@@ -45,6 +45,14 @@ const handlePlaceShape = (index: number) => {
   saveGameToStorage();
 };
 
+const resetGame = () => {
+  const storedGame = localStorage.getItem('game');
+  if (storedGame) {
+    localStorage.removeItem('game');
+  }
+  game.value = null;
+};
+
 onMounted(() => {
   fetchGame();
 });
