@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const links = [
   { path: '/', name: 'Home' },
-  { path: '/about', name: 'About' },
+  { path: '/scores', name: 'Scores' },
   { path: '/game', name: 'Game' },
 ];
 </script>
