@@ -4,26 +4,15 @@ import { Game } from '../models/CGame';
 import Grid from './Grid.vue';
 import PlayerForm from './PlayerForm.vue';
 import GameInfo from './GameInfo.vue';
+import { winCheck } from '../services/winCheck';
+import { Player } from '../models/CPlayer';
+import { fetchGame, saveGameToStorage, saveScore } from '../services/storage';
 
-const game = ref<Game | null>(null);
+const game = ref<Game | null>(fetchGame());
 
 const startGame = (newGame: Game) => {
   game.value = newGame;
   localStorage.setItem('game', JSON.stringify(newGame));
-};
-
-const saveGameToStorage = () => {
-  localStorage.setItem('game', JSON.stringify(game.value));
-};
-
-const fetchGame = () => {
-  const storedGame = localStorage.getItem('game');
-  if (typeof storedGame !== 'string') {
-    return;
-  }
-  const parsedGame: Game = JSON.parse(storedGame);
-
-  game.value = parsedGame;
 };
 
 const handlePlaceShape = (index: number) => {
@@ -63,15 +52,15 @@ const resetGame = () => {
   }
   game.value = null;
 };
-
-onMounted(() => {
-  fetchGame();
-});
 </script>
 
 <template>
   <div v-if="game">
-    <GameInfo :game="game" @resetGame="() => resetGame()" />
+    <GameInfo
+      :game="game"
+      @resetGame="() => resetGame()"
+      @saveScore="(players: Player[]) => saveScore(players)"
+    />
     <Grid
       :game="game"
       @placeShape="(index:number) => handlePlaceShape(index)"
