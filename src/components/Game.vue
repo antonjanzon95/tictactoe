@@ -42,8 +42,18 @@ const handlePlaceShape = (index: number) => {
   if (otherPlayer) {
     game.value.isPlaying = otherPlayer;
   }
+  const winnerShape = winCheck(game.value);
 
-  saveGameToStorage();
+  const winner = game.value.players.find(
+    (player) => player.shape === winnerShape
+  );
+
+  if (winner) {
+    winner.score += 1;
+    alert(winner.name + ' has won the game!');
+  }
+
+  saveGameToStorage(game.value);
 };
 
 const resetGame = () => {
