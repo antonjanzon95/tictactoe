@@ -7,7 +7,7 @@ interface IProps {
 
 const props = defineProps<IProps>();
 
-const emit = defineEmits(['resetGame']);
+const emit = defineEmits(['resetGame', 'saveScore']);
 </script>
 
 <template>
@@ -16,4 +16,5 @@ const emit = defineEmits(['resetGame']);
     {{ props.game.isPlaying.shape }}
   </h3>
   <button @click="emit('resetGame')">Reset</button>
+  <button @click="emit('saveScore', props.game.players)">Save scores</button>
 </template>
