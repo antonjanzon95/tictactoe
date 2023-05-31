@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { Game } from '../models/CGame';
 import Grid from './Grid.vue';
 import PlayerForm from './PlayerForm.vue';
 import GameInfo from './GameInfo.vue';
+import WinnerInfo from './WinnerInfo.vue';
 import { winCheck } from '../services/winCheck';
 import { Player } from '../models/CPlayer';
 import { fetchGame, saveGameToStorage, saveScore } from '../services/storage';
+import QuitGame from './QuitGame.vue';
 
 const game = ref<Game | null>(fetchGame());
+const winner = ref<string | null>(null);
 
 const startGame = (newGame: Game) => {
   game.value = newGame;
@@ -16,6 +19,10 @@ const startGame = (newGame: Game) => {
 };
 
 const handlePlaceShape = (index: number) => {
+  if (winner.value) {
+    return;
+  }
+
   const player = game.value!.isPlaying;
   const shape = player.shape;
   const otherPlayer = game.value!.players.find(
@@ -33,24 +40,34 @@ const handlePlaceShape = (index: number) => {
   }
   const winnerShape = winCheck(game.value);
 
-  const winner = game.value.players.find(
+  const hasWon = game.value.players.find(
     (player) => player.shape === winnerShape
   );
 
-  if (winner) {
-    winner.score += 1;
-    alert(winner.name + ' has won the game!');
+  if (hasWon) {
+    hasWon.score += 1;
+    winner.value = hasWon.name;
   }
 
   saveGameToStorage(game.value);
 };
 
-const resetGame = () => {
+const quitGame = () => {
   const storedGame = localStorage.getItem('game');
   if (storedGame) {
     localStorage.removeItem('game');
   }
   game.value = null;
+};
+
+const saveAndQuit = (players: Player[]) => {
+  saveScore(players);
+  quitGame();
+};
+
+const playAgain = (players: Player[]) => {
+  winner.value = null;
+  game.value = new Game(players);
 };
 </script>
 
@@ -58,13 +75,19 @@ const resetGame = () => {
   <div v-if="game">
     <GameInfo
       :game="game"
-      @resetGame="() => resetGame()"
-      @saveScore="(players: Player[]) => saveScore(players)"
+      @saveAndQuit="(players: Player[]) => saveAndQuit(players)"
+    />
+    <WinnerInfo
+      v-if="winner"
+      @playAgain="() => playAgain(game!.players)"
+      :winner="winner"
+      :game="game"
     />
     <Grid
       :game="game"
       @placeShape="(index:number) => handlePlaceShape(index)"
     />
+    <QuitGame @quitGame="quitGame" />
   </div>
 
   <div v-else>
