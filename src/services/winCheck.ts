@@ -12,17 +12,28 @@ export const winningCombinations = [
   [2, 4, 6],
 ];
 
+export interface winningComboShape {
+  combo: number[];
+  shape: Shape;
+}
+
 export const winCheck = (game: Game) => {
-  let winningShape: Shape | null = null;
+  let winningShapeAndCombo: winningComboShape | null = null;
   winningCombinations.forEach((combination) => {
     if (
       game.grid[combination[0]].shape &&
       game.grid[combination[0]].shape == game.grid[combination[1]].shape &&
       game.grid[combination[1]].shape == game.grid[combination[2]].shape
     ) {
-      winningShape = game.grid[combination[0]].shape;
+      winningShapeAndCombo = {
+        combo: combination,
+        shape: game.grid[combination[0]].shape,
+      };
     }
   });
+
+  return winningShapeAndCombo;
+};
 
 export const tieCheck = (game: Game): boolean => {
   const isTie = game.grid.every((square) => square.shape);

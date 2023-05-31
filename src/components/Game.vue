@@ -5,7 +5,7 @@ import Grid from './Grid.vue';
 import PlayerForm from './PlayerForm.vue';
 import GameInfo from './GameInfo.vue';
 import WinnerInfo from './WinnerInfo.vue';
-import { winCheck } from '../services/winCheck';
+import { tieCheck, winCheck, winningComboShape } from '../services/winCheck';
 import { Player } from '../models/CPlayer';
 import { fetchGame, saveGameToStorage, saveScore } from '../services/storage';
 import QuitGame from './QuitGame.vue';
@@ -38,16 +38,30 @@ const handlePlaceShape = (index: number) => {
   if (otherPlayer) {
     game.value.isPlaying = otherPlayer;
   }
-  const winnerShape = winCheck(game.value);
 
-  const hasWon = game.value.players.find(
-    (player) => player.shape === winnerShape
-  );
+  saveGameToStorage(game.value);
+  checkWinOrTie();
+};
 
-  if (hasWon) {
-    game.value.isDone = true;
-    hasWon.score += 1;
-    winner.value = hasWon.name;
+const checkWinOrTie = () => {
+  if (!game.value) return;
+
+  const winningComboAndShape: winningComboShape | null = winCheck(game.value);
+
+  if (winningComboAndShape) {
+    const hasWon = game.value.players.find(
+      (player) =>
+        player.shape === (winningComboAndShape as winningComboShape).shape
+    );
+
+    if (hasWon) {
+      game.value.isDone = true;
+      hasWon.score += 1;
+      winner.value = hasWon.name;
+      game.value.winningCombo = (
+        winningComboAndShape as winningComboShape
+      ).combo;
+    }
   }
 
   if (!winningComboAndShape && tieCheck(game.value)) {
@@ -76,13 +90,13 @@ const playAgain = (players: Player[]) => {
 </script>
 
 <template>
-  <div v-if="game">
+  <div v-if="game" class="flex flex-col gap-8">
     <GameInfo
       :game="game"
       @saveAndQuit="(players: Player[]) => saveAndQuit(players)"
     />
     <WinnerInfo
-      v-if="winner"
+      v-if="game.isDone"
       @saveAndQuit="saveAndQuit"
       @playAgain="() => playAgain(game!.players)"
       :winner="winner"
@@ -99,5 +113,3 @@ const playAgain = (players: Player[]) => {
     <PlayerForm @startGame="(newGame) => startGame(newGame)" />
   </div>
 </template>
-
-<style scoped></style>
