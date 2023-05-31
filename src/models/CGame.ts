@@ -5,6 +5,7 @@ export class Game {
   grid: CSquare[] = Array.from({ length: 9 }, () => new CSquare());
   isPlaying: Player;
   isDone: boolean = false;
+  winningCombo: number[] | null = null;
 
   constructor(public players: Player[]) {
     this.isPlaying = this.players[Math.round(Math.random())];
