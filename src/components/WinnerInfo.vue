@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Game } from '../models/CGame';
+import { btnStyle } from '../models/BtnStyle';
 
 interface IProps {
-  winner: string;
+  winner: string | null;
   game: Game;
 }
 
@@ -11,12 +12,20 @@ const emit = defineEmits(['playAgain', 'saveAndQuit']);
 </script>
 
 <template>
-  <div>
-    <h2>{{ props.winner }} has won!</h2>
-    <button @click="emit('playAgain')">Play again</button>
-    <button @click="emit('saveAndQuit', props.game.players)">
-      Save scores and quit
-    </button>
+  <div class="flex flex-col gap-4 text-center">
+    <h2 class="text-3xl text-teal-400" v-if="winner">
+      <span class="font-bold">{{ props.winner }}</span> has won!
+    </h2>
+    <h2 class="text-3xl text-teal-400" v-else>It's a tie!</h2>
+    <div class="flex justify-between">
+      <button :class="btnStyle" @click="emit('playAgain')">Play again</button>
+      <button
+        :class="btnStyle"
+        @click="emit('saveAndQuit', props.game.players)"
+      >
+        Save scores and quit
+      </button>
+    </div>
   </div>
 </template>
 
