@@ -16,6 +16,7 @@ const props = defineProps<IProps>();
       {{ props.game.players[1].name }}: {{ props.game.players[1].score }}
     </h2>
     <h3
+      v-if="!game.isDone"
       class="p-4 bg-slate-800 rounded-xl text-orange-400 font-semibold text-lg"
     >
       Current player: {{ props.game.isPlaying.name }} with

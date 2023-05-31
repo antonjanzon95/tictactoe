@@ -45,6 +45,7 @@ const handlePlaceShape = (index: number) => {
   );
 
   if (hasWon) {
+    game.value.isDone = true;
     hasWon.score += 1;
     winner.value = hasWon.name;
   }
@@ -58,6 +59,7 @@ const quitGame = () => {
     localStorage.removeItem('game');
   }
   game.value = null;
+  winner.value = null;
 };
 
 const saveAndQuit = (players: Player[]) => {
@@ -79,6 +81,7 @@ const playAgain = (players: Player[]) => {
     />
     <WinnerInfo
       v-if="winner"
+      @saveAndQuit="saveAndQuit"
       @playAgain="() => playAgain(game!.players)"
       :winner="winner"
       :game="game"
