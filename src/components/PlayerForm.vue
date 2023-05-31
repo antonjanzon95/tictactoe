@@ -4,6 +4,7 @@ import { Player } from '../models/CPlayer';
 import { Shape } from '../models/Shape';
 import { Game } from '../models/CGame';
 import { checkName } from '../services/validateName';
+import { btnStyle } from '../models/BtnStyle';
 
 const name = ref<string>('');
 const pickedShape = ref<Shape>(Shape.X);
@@ -75,7 +76,7 @@ const toggleShape = (e: MouseEvent) => {
       <label
         @click="toggleShape"
         data-shape="X"
-        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center selected"
+        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center cursor-pointer selected"
       >
         X
         <input type="radio" value="X" v-model="pickedShape" class="hidden" />
@@ -83,17 +84,15 @@ const toggleShape = (e: MouseEvent) => {
       <label
         @click="toggleShape"
         data-shape="O"
-        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center"
+        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center cursor-pointer"
       >
         O
         <input type="radio" value="O" v-model="pickedShape" class="hidden" />
       </label>
     </div>
 
-    <button
-      class="px-4 py-2 border-2 border-accent rounded-lg mx-auto transition-all duration-300 hover:bg-orange-500 bg-slate-800"
-    >
-      Submit
+    <button :class="btnStyle">
+      {{ players.length < 1 ? 'Next' : 'Play' }}
     </button>
   </form>
 </template>
@@ -102,5 +101,7 @@ const toggleShape = (e: MouseEvent) => {
 .selected {
   background-color: #f97316;
   border-radius: 1.5rem;
+  border: 2px white solid;
+  cursor: default;
 }
 </style>

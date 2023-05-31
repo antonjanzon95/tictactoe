@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { btnStyle } from '../models/BtnStyle';
+
 const emit = defineEmits(['quitGame']);
 </script>
 
 <template>
-  <button @click="emit('quitGame')">Quit game</button>
+  <button :class="btnStyle" @click="emit('quitGame')">Quit game</button>
 </template>
