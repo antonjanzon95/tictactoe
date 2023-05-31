@@ -53,14 +53,22 @@ const toggleShape = (e: MouseEvent) => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 outline p-4">
-    <input type="text" v-model="name" placeholder="Name" class="outline" />
+  <form
+    @submit.prevent="handleSubmit"
+    class="flex flex-col gap-8 p-8 bg-slate-900 text-slate-50 rounded-lg"
+  >
+    <input
+      type="text"
+      v-model="name"
+      :placeholder="players.length < 1 ? 'Player 1' : 'Player 2'"
+      class="p-2 rounded-lg text-slate-900"
+    />
 
     <div class="flex justify-around">
       <label
         @click="toggleShape"
         data-shape="X"
-        class="w-10 h-10 bg-slate-100 grid place-items-center selected"
+        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center selected"
       >
         X
         <input type="radio" value="X" v-model="pickedShape" class="hidden" />
@@ -68,14 +76,16 @@ const toggleShape = (e: MouseEvent) => {
       <label
         @click="toggleShape"
         data-shape="O"
-        class="w-10 h-10 bg-slate-100 grid place-items-center"
+        class="w-16 h-16 text-5xl hover:rounded-3xl transition-all duration-300 rounded-xl bg-slate-600 grid place-items-center"
       >
         O
         <input type="radio" value="O" v-model="pickedShape" class="hidden" />
       </label>
     </div>
 
-    <button class="px-4 py-2 border-2 border-accent rounded-lg mx-auto">
+    <button
+      class="px-4 py-2 border-2 border-accent rounded-lg mx-auto transition-all duration-300 hover:bg-orange-500 bg-slate-800"
+    >
       Submit
     </button>
   </form>
@@ -83,6 +93,7 @@ const toggleShape = (e: MouseEvent) => {
 
 <style scoped>
 .selected {
-  background-color: gold;
+  background-color: #f97316;
+  border-radius: 1.5rem;
 }
 </style>
