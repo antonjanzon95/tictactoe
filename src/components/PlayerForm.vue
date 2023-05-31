@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { Player } from '../models/CPlayer';
 import { Shape } from '../models/Shape';
 import { Game } from '../models/CGame';
+import { checkName } from '../services/validateName';
 
 const name = ref<string>('');
 const pickedShape = ref<Shape>(Shape.X);
@@ -11,6 +12,12 @@ const players = ref<Player[]>([]);
 const emit = defineEmits(['startGame']);
 
 const handleSubmit = () => {
+  const nameIsValid = checkName(name.value);
+
+  if (!nameIsValid) {
+    return alert('Please input a valid name!');
+  }
+
   const newPlayer = new Player(name.value, pickedShape.value);
   name.value = '';
   setShape(pickedShape.value);
