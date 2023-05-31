@@ -24,5 +24,8 @@ export const winCheck = (game: Game) => {
     }
   });
 
-  return winningShape;
+export const tieCheck = (game: Game): boolean => {
+  const isTie = game.grid.every((square) => square.shape);
+
+  return isTie;
 };

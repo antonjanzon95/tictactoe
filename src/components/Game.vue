@@ -50,7 +50,9 @@ const handlePlaceShape = (index: number) => {
     winner.value = hasWon.name;
   }
 
-  saveGameToStorage(game.value);
+  if (!winningComboAndShape && tieCheck(game.value)) {
+    game.value.isDone = true;
+  }
 };
 
 const quitGame = () => {
