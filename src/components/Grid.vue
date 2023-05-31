@@ -16,6 +16,9 @@ const emit = defineEmits(['placeShape']);
       v-for="(square, index) in game.grid"
       :shape="square.shape"
       :index="index"
+      :hasWon="
+        game.winningCombo && game.winningCombo.includes(index) ? true : false
+      "
       @placeShape="(index: number) => emit('placeShape', index)"
     />
   </div>
