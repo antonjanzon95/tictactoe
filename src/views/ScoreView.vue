@@ -9,7 +9,7 @@ const scores = ref<Match[]>(fetchScores());
 
 <template>
   <div class="flex flex-col gap-8">
-    <h1 class="font-bold text-5xl">Scores</h1>
+    <h1 class="font-bold text-5xl text-center">Scores</h1>
     <div v-if="scores">
       <Scores :scores="scores" />
     </div>
