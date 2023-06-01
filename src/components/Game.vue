@@ -90,7 +90,7 @@ const playAgain = (players: Player[]) => {
 </script>
 
 <template>
-  <div v-if="game" class="flex flex-col gap-8">
+  <div v-if="game" class="flex flex-col items-center gap-8 tablet:pt-0 pt-20">
     <GameInfo
       :game="game"
       @saveAndQuit="(players: Player[]) => saveAndQuit(players)"

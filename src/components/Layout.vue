@@ -6,7 +6,7 @@ import Header from './Header.vue';
   <Header />
 
   <main
-    class="h-screen flex justify-center items-center bg-slate-950 text-slate-50"
+    class="min-h-screen flex justify-center items-center bg-slate-950 text-slate-50"
   >
     <slot></slot>
   </main>

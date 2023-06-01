@@ -10,7 +10,7 @@ const scores = ref<Match[]>(fetchScores());
 <template>
   <div class="flex flex-col gap-8">
     <h1 class="font-bold text-5xl text-center">Scores</h1>
-    <div v-if="scores">
+    <div v-if="scores" class="overflow-y-auto max-h-80">
       <Scores :scores="scores" />
     </div>
 

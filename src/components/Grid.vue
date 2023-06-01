@@ -12,10 +12,10 @@ const emit = defineEmits(['placeShape']);
 
 <template>
   <div
-    class="w-[360px] h-[360px] grid grid-rows-3 grid-cols-3 border-l-2 border-t-2 border-orange-500"
+    class="tablet:w-[360px] tablet:h-[360px] w-60 h-60 grid grid-rows-3 grid-cols-3 border-l-2 border-t-2 border-orange-500"
   >
     <Square
-      v-for="(square, index) in game.grid"
+      v-for="(square, index) in props.game.grid"
       :shape="square.shape"
       :index="index"
       :hasWon="

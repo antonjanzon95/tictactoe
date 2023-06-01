@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col justify-center items-center gap-8">
+  <div class="flex flex-col justify-center items-center gap-8 text-center">
     <h1 class="text-5xl font-bold">Welcome to TicTacToe</h1>
     <p class="text-xl">
       To play, simply navigate to the
