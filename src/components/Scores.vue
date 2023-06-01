@@ -5,21 +5,26 @@ import Score from './Score.vue';
 interface IProps {
   scores: Match[];
 }
-const props = defineProps<IProps>();
 
-console.log(props.scores);
+const props = defineProps<IProps>();
 </script>
 
 <template>
-  <table>
+  <table class="text-2xl">
     <thead>
       <tr>
-        <th>Match</th>
-        <th>Result</th>
+        <th class="px-4 py-2">Match</th>
+        <th class="px-4 py-2">Result</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="score in scores">
+      <tr
+        v-for="(score, index) in scores"
+        :class="{
+          'bg-slate-800': index % 2 === 0,
+          'bg-slate-900': index % 2 !== 0,
+        }"
+      >
         <Score :score="score" />
       </tr>
     </tbody>
